@@ -14,7 +14,6 @@ public class Person {
     private String state;
     private int zipCode;
 
-    // Constructor
     public Person(String firstName, String lastName, int age, String email, String phoneNumber, String streetAddress, String city, String state, int zipCode) {
         this.firstName = firstName;
         this.lastName = lastName;
