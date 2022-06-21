@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonController {
 
     @Autowired
-    private Person person;
+    private RandomPersonFactory personFactory;
 
     @GetMapping("/person")
-    public Person person () { return person; }
+    public Person person () { return personFactory.createRandomPerson(); }
 }
