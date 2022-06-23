@@ -14,17 +14,7 @@ public class Person {
     private String state;
     private int zipCode;
 
-    public Person(String firstName, String lastName, int age, String email, String phoneNumber, String streetAddress, String city, String state, int zipCode) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.streetAddress = streetAddress;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-    }
+    public Person() {}
 
     // Getters
     public String getFirstName() { return firstName; }
@@ -37,4 +27,14 @@ public class Person {
     public String getState() { return state; }
     public int getZipCode() { return zipCode; }
 
+    // Setters
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setAge(int age) { this.age = age; }
+    public void setEmail(String email) { this.email = email; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public void setStreetAddress(String streetAddress) { this.streetAddress = streetAddress; }
+    public void setCity(String city) { this.city = city; }
+    public void setState(String state) {this.state = state; }
+    public void setZipCode(int zipCode) { this.zipCode = zipCode; }
 }
