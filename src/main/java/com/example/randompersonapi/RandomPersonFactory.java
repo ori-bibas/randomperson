@@ -88,8 +88,7 @@ public class RandomPersonFactory {
     */
     public static JSONArray getJSONArray(String pathName, String arrayName) throws IOException, ParseException {
         JSONObject object = (JSONObject) jsonParser.parse(new FileReader(pathName));
-        JSONArray arr = (JSONArray) object.get(arrayName);
-        return arr;
+        return (JSONArray) object.get(arrayName);
     }
 
     /*
