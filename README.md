@@ -3,10 +3,33 @@
 
 ### About
 
-I've created this API for a user to be able to retrieve a person with randomized attributes. I programmed it in Java, and utilized the Spring frameworks tools for creating REST API functionality. When calling a GET request to the end-point, it will return a JSON object with a random first name, last name, email address, age, phone number, street address, city, state, and zip code.
+I've created this API for a user to be able to retrieve a person with randomized attributes. I programmed it in Java, and utilized Spring framework tools for creating the REST API functionality. When calling a GET request to the end-point, it will return a JSON object with a random first name, last name, email address, age, phone number, street address, city, state, and zip code. The app is hosted with Heroku.
 
 ### How To Use
 
 To call my API, make a GET request to ```https://randomperson-api.herokuapp.com/person```
 
+##### Python Example
 
+```python
+import requests
+
+URL = "https://randomperson-api.herokuapp.com/person"
+response = requests.get(URL)
+
+# To get the JSON data from the response as key-value pairs
+json_data = response.json()
+
+# To access individual elements of the JSON data
+firstName = json_data.get("firstName")
+lastName = json_data.get("lastName")
+age = json_data.get("age")
+email = json_data.get("email")
+phoneNumber = json_data.get("phoneNumber")
+streetAddress = json_data.get("streetAddress")
+city = json_data.get("city")
+state = json_data.get("state")
+zip = json_data.get("zipCode")
+
+
+```
