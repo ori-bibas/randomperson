@@ -4,14 +4,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Iterator;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Random;
 
 @Service
@@ -19,6 +17,7 @@ public class RandomPersonFactory {
 
     private static Random rand = new Random();
     private static JSONParser jsonParser = new JSONParser();
+    private static RestTemplate restTemplate = new RestTemplate();
 
     /*
         Written By: Ori Bibas
@@ -44,18 +43,23 @@ public class RandomPersonFactory {
         String randomFirstName = (String) firstNames.get(randomFirstIndex);
         String randomLastName = (String) lastNames.get(randomLastIndex);
 
+        // Setting random email, age between 14-90, phone number, and address.
         String randomEmail = createEmail(randomFirstName, randomLastName);
-
         int randomAge = rand.nextInt(90 - 14) + 14;
-
         String randomPhoneNumber = generateRandomPhoneNumber();
+        Address address = createRandomAddress();
 
         randomPerson.setFirstName(randomFirstName);
         randomPerson.setLastName(randomLastName);
         randomPerson.setEmail(randomEmail);
         randomPerson.setAge(randomAge);
         randomPerson.setPhoneNumber(randomPhoneNumber);
+        randomPerson.setStreetAddress(address.streetAddress);
+        randomPerson.setCity(address.city);
+        randomPerson.setState(address.state);
+        randomPerson.setZipCode(address.zipCode);
 
+        // Finally, return the person with randomized attributes.
         return randomPerson;
     }
 
@@ -109,6 +113,45 @@ public class RandomPersonFactory {
 
         // Concatenate the two strings and return
         return firstNumber + rest;
+    }
+
+    /*
+        Written By: Ori Bibas
+            Opens a connection to a public GitHub repository with a lot of addresses, retrieves the JSON data, parses it,
+            picks a random element, and populates an address object with street address, city, state, and zip code.
+        Return Type: Address
+    */
+    public static Address createRandomAddress() throws IOException, ParseException {
+
+        // Open a connection to the JSON data on GitHub
+        Address address = new Address();
+        URL url = new URL("https://raw.githubusercontent.com/EthanRBrown/rrad/master/addresses-us-100.json");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        // Read in the response to StringBuffer
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuffer response = new StringBuffer();
+        String inputLine;
+        while((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        // Parse the response, and set a JSONArray to the array "addresses"
+        JSONObject addressesObject = (JSONObject) jsonParser.parse(response.toString());
+        JSONArray addressesArray = (JSONArray) addressesObject.get("addresses");
+
+        // Choose a random object from the addresses array
+        int randomIndex = rand.nextInt(addressesArray.size());
+        JSONObject obj = (JSONObject) addressesArray.get(randomIndex);
+
+        // Set the properties of that object to the random address, and return.
+        address.setStreetAddress((String) obj.get("address1"));
+        address.setCity((String) obj.get("city"));
+        address.setState((String) obj.get("state"));
+        address.setZipCode((String) obj.get("postalCode"));
+
+        return address;
     }
 
 }
