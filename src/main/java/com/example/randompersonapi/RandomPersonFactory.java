@@ -103,7 +103,7 @@ public class RandomPersonFactory {
 
         String firstNumber = "", rest = "";
 
-        // For the area code, only digits that are between 2-9
+        // For the first number, only digits that are between 2-9
         firstNumber += rand.nextInt((10 - 2) + 2);
 
         // For the rest, numbers between 0-9
