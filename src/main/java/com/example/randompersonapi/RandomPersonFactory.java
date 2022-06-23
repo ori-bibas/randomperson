@@ -68,7 +68,7 @@ public class RandomPersonFactory {
         Arguments: First name and a last name as a string.
         Return: A randomized email address string, with a random domain and character in the middle. Ex: john_doe@hotmail.com
     */
-    public static String createEmail(String firstName, String lastName) {
+    public String createEmail(String firstName, String lastName) {
         String[] domains = {"@gmail.com", "@outlook.com", "@hotmail.com", "@aol.com", "@live.com", "@yahoo.com"};
         Character[] chars = {'.', '-', '_'};
         int randomDomain = rand.nextInt(domains.length);
@@ -81,7 +81,7 @@ public class RandomPersonFactory {
         Arguments: Pass a string with the name of the JSON file.
         Return: A string that is the path to that file in the resources folder.
     */
-    public static String pathToJSON(String jsonFileName) {
+    public String pathToJSON(String jsonFileName) {
         return "src/main/resources/" + jsonFileName;
     }
 
@@ -90,7 +90,7 @@ public class RandomPersonFactory {
         Arguments: Pass the full path to the JSON file as a string, pass the string name of the array inside the JSON object you want.
         Return Type: JSONArray
     */
-    public static JSONArray getJSONArray(String pathName, String arrayName) throws IOException, ParseException {
+    public JSONArray getJSONArray(String pathName, String arrayName) throws IOException, ParseException {
         JSONObject object = (JSONObject) jsonParser.parse(new FileReader(pathName));
         return (JSONArray) object.get(arrayName);
     }
@@ -99,7 +99,7 @@ public class RandomPersonFactory {
         Written By: Ori Bibas
         Return: A randomized 10-digit phone number as a string.
     */
-    public static String generateRandomPhoneNumber() {
+    public String generateRandomPhoneNumber() {
 
         String firstNumber = "", rest = "";
 
@@ -121,7 +121,7 @@ public class RandomPersonFactory {
             picks a random element, and populates an address object with street address, city, state, and zip code.
         Return Type: Address
     */
-    public static Address createRandomAddress() throws IOException, ParseException {
+    public Address createRandomAddress() throws IOException, ParseException {
 
         // Open a connection to the JSON data on GitHub
         Address address = new Address();
