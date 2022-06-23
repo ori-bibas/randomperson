@@ -97,19 +97,18 @@ public class RandomPersonFactory {
     */
     public static String generateRandomPhoneNumber() {
 
+        String firstNumber = "", rest = "";
+
         // For the area code, only digits that are between 2-9
-        String areaCode = "", rest = "";
-        for(int i = 0; i < 3; i++) {
-            areaCode += rand.nextInt(10 - 2) + 2;
-        }
+        firstNumber += rand.nextInt((10 - 2) + 2);
 
         // For the rest, numbers between 0-9
-        for(int i = 0; i < 7; i++) {
+        for(int i = 0; i < 9; i++) {
             rest += rand.nextInt(10);
         }
 
         // Concatenate the two strings and return
-        return areaCode + rest;
+        return firstNumber + rest;
     }
 
 }
