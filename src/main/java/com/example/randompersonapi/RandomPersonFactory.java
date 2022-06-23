@@ -41,8 +41,20 @@ public class RandomPersonFactory {
         int randomLastIndex = rand.nextInt(lastNames.size());
 
         // Set first and last name to be a random element from their respective arrays.
-        String randomFirst = (String) firstNames.get(randomFirstIndex);
-        String randomLast = (String) lastNames.get(randomLastIndex);
+        String randomFirstName = (String) firstNames.get(randomFirstIndex);
+        String randomLastName = (String) lastNames.get(randomLastIndex);
+
+        String randomEmail = createEmail(randomFirstName, randomLastName);
+
+        int randomAge = rand.nextInt(90 - 14) + 14;
+
+        String randomPhoneNumber = generateRandomPhoneNumber();
+
+        randomPerson.setFirstName(randomFirstName);
+        randomPerson.setLastName(randomLastName);
+        randomPerson.setEmail(randomEmail);
+        randomPerson.setAge(randomAge);
+        randomPerson.setPhoneNumber(randomPhoneNumber);
 
         return randomPerson;
     }
@@ -78,6 +90,27 @@ public class RandomPersonFactory {
         JSONObject object = (JSONObject) jsonParser.parse(new FileReader(pathName));
         JSONArray arr = (JSONArray) object.get(arrayName);
         return arr;
+    }
+
+    /*
+        Written By: Ori Bibas
+        Return: A randomized 10-digit phone number as a string.
+    */
+    public static String generateRandomPhoneNumber() {
+
+        // For the area code, only digits that are between 2-9
+        String areaCode = "", rest = "";
+        for(int i = 0; i < 3; i++) {
+            areaCode += rand.nextInt(10 - 2) + 2;
+        }
+
+        // For the rest, numbers between 0-9
+        for(int i = 0; i < 7; i++) {
+            rest += rand.nextInt(10);
+        }
+
+        // Concatenate the two strings and return
+        return areaCode + rest;
     }
 
 }
