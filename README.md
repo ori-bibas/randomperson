@@ -9,9 +9,28 @@ I've created this API for a user to be able to retrieve a person with randomized
 
 To call my API, make a GET request to ```https://randomperson-api.herokuapp.com/person```
 
+##### JSON Response format
+
+```json
+
+{
+  "firstName": "Ori",
+  "lastName": "Bibas",
+  "age": 21,
+  "email": "oribibas@knights.ucf.edu",
+  "phoneNumber": "5555555555",
+  "streetAddress": "1600 Pennsylvania Avenue NW",
+  "city": "Washington",
+  "state": "DC",
+  "zipCode": "20500"
+}
+
+```
+
 ##### Python Example
 
 ```python
+
 import requests
 
 URL = "https://randomperson-api.herokuapp.com/person"
@@ -30,6 +49,5 @@ streetAddress = json_data.get("streetAddress")
 city = json_data.get("city")
 state = json_data.get("state")
 zip = json_data.get("zipCode")
-
 
 ```
