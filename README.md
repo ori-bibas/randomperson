@@ -51,3 +51,23 @@ state = json_data.get("state")
 zip = json_data.get("zipCode")
 
 ```
+
+#### JavaScript Example
+
+```javascript
+
+const url = "https://randomperson-api.herokuapp.com/person";
+
+const userAction = async () => {
+  const response = await fetch(url);    // Request a response from the URL using fetch
+  const myJson = await response.json();    // Extract JSON from the HTTP response
+  // Do something with your JSON
+}
+
+```
+
+
+
+
+
+
