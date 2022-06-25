@@ -1,5 +1,5 @@
 # Random Person API
-## REST API created with Java + Spring Boot
+## REST API created with Java + Spring Boot to generate fake people with random attributes.
 
 ### About
 
