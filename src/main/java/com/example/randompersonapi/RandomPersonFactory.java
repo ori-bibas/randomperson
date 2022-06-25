@@ -9,33 +9,36 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 
 @Service
 public class RandomPersonFactory {
 
-    private static Random rand = new Random();
-    private static JSONParser jsonParser = new JSONParser();
-    private static RestTemplate restTemplate = new RestTemplate();
+    private static final Random rand = new Random();
+    private static final JSONParser jsonParser = new JSONParser();
+    private static final String firstNamesURL = "https://raw.githubusercontent.com/ori-bibas/list-of-names/main/src/first-names.json";
+    private static final String lastNamesURL = "https://raw.githubusercontent.com/ori-bibas/list-of-names/main/src/last-names.json";
+    private static final String emailsURL = "https://raw.githubusercontent.com/EthanRBrown/rrad/master/addresses-us-100.json";
 
     /*
         Written By: Ori Bibas
-        This function will return a Person object with randomized attributes.
+            This function will return a Person object with randomized attributes.
     */
     public Person createRandomPerson() throws IOException, ParseException {
 
         Person randomPerson = new Person();
 
-        // Set path names to the JSON files.
-        String firstNamesPath = pathToJSON("first-names.json");
-        String lastNamesPath = pathToJSON("last-names.json");
+        // Get two JSON Objects from remote repos.
+        JSONObject firstNamesObj = getJSONObjectFromRemote(firstNamesURL);
+        JSONObject lastNamesObj = getJSONObjectFromRemote(lastNamesURL);
 
-        // Get two JSON arrays, one for the first names one for the last names.
-        JSONArray firstNames = getJSONArray(firstNamesPath, "firstNames");
-        JSONArray lastNames = getJSONArray(lastNamesPath, "lastNames");
+        // Create JSON Arrays for each.
+        JSONArray firstNames = (JSONArray) firstNamesObj.get("firstNames");
+        JSONArray lastNames = (JSONArray) lastNamesObj.get("lastNames");
 
-        // Get random indexes.
+        // Get random indexes to pull from.
         int randomFirstIndex = rand.nextInt(firstNames.size());
         int randomLastIndex = rand.nextInt(lastNames.size());
 
@@ -49,6 +52,7 @@ public class RandomPersonFactory {
         String randomPhoneNumber = generateRandomPhoneNumber();
         Address address = createRandomAddress();
 
+        // Populate the randomPerson object with all the data generated.
         randomPerson.setFirstName(randomFirstName);
         randomPerson.setLastName(randomLastName);
         randomPerson.setEmail(randomEmail);
@@ -59,14 +63,13 @@ public class RandomPersonFactory {
         randomPerson.setState(address.state);
         randomPerson.setZipCode(address.zipCode);
 
-        // Finally, return the person with randomized attributes.
         return randomPerson;
     }
 
     /*
         Written By: Ori Bibas
-        Arguments: First name and a last name as a string.
-        Return: A randomized email address string, with a random domain and character in the middle. Ex: john_doe@hotmail.com
+        Takes in a first name and a last name as a string. Creates randomized email address string, with a random
+        domain and character in the middle. Ex: john_doe@hotmail.com
     */
     public String createEmail(String firstName, String lastName) {
         String[] domains = {"@gmail.com", "@outlook.com", "@hotmail.com", "@aol.com", "@live.com", "@yahoo.com"};
@@ -78,26 +81,7 @@ public class RandomPersonFactory {
 
     /*
         Written By: Ori Bibas
-        Arguments: Pass a string with the name of the JSON file.
-        Return: A string that is the path to that file in the resources folder.
-    */
-    public String pathToJSON(String jsonFileName) {
-        return "src/main/resources/" + jsonFileName;
-    }
-
-    /*
-        Written By: Ori Bibas
-        Arguments: Pass the full path to the JSON file as a string, pass the string name of the array inside the JSON object you want.
-        Return Type: JSONArray
-    */
-    public JSONArray getJSONArray(String pathName, String arrayName) throws IOException, ParseException {
-        JSONObject object = (JSONObject) jsonParser.parse(new FileReader(pathName));
-        return (JSONArray) object.get(arrayName);
-    }
-
-    /*
-        Written By: Ori Bibas
-        Return: A randomized 10-digit phone number as a string.
+            A randomized 10-digit phone number as a string.
     */
     public String generateRandomPhoneNumber() {
 
@@ -118,29 +102,15 @@ public class RandomPersonFactory {
 
     /*
         Written By: Ori Bibas
-            Opens a connection to a public GitHub repository with a lot of addresses, retrieves the JSON data, parses it,
-            picks a random element, and populates an address object with street address, city, state, and zip code.
-        Return Type: Address
+            Creates a new address. Gets JSON object from addresses repository, creates an array from that object,
+            retrieves the object from a random element in that array, then populats an Address object with that random data.
     */
     public Address createRandomAddress() throws IOException, ParseException {
 
-        // Open a connection to the JSON data on GitHub
         Address address = new Address();
-        URL url = new URL("https://raw.githubusercontent.com/EthanRBrown/rrad/master/addresses-us-100.json");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-        // Read in the response to StringBuffer
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        StringBuffer response = new StringBuffer();
-        String inputLine;
-        while((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-
-        // Parse the response, and set a JSONArray to the array "addresses"
-        JSONObject addressesObject = (JSONObject) jsonParser.parse(response.toString());
-        JSONArray addressesArray = (JSONArray) addressesObject.get("addresses");
+        JSONObject addresses = getJSONObjectFromRemote(emailsURL);
+        JSONArray addressesArray = (JSONArray) addresses.get("addresses");
 
         // Choose a random object from the addresses array
         int randomIndex = rand.nextInt(addressesArray.size());
@@ -155,4 +125,28 @@ public class RandomPersonFactory {
         return address;
     }
 
+    /*
+        Written By: Ori Bibas
+            Opens a connection to my GitHub repo with plenty of data, retrieves the JSON data, parses it,
+            and returns the JSON object.
+    */
+    public JSONObject getJSONObjectFromRemote(String link) throws IOException, ParseException {
+
+        URL url = new URL(link);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        // Read in the response to StringBuffer
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuffer response = new StringBuffer();
+        String inputLine;
+        while((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        // Parse the response, and set a JSONArray to the array "addresses"
+        JSONObject obj = (JSONObject) jsonParser.parse(response.toString());
+
+        return obj;
+    }
 }
