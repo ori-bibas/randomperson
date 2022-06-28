@@ -16,3 +16,4 @@ target/
 *.logs
 *.iml
 .idea/
+**/.DS_Store
