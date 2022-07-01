@@ -3,7 +3,7 @@
 
 ### About
 
-I've created this API for a user to be able to retrieve a person with randomized attributes. I programmed it in Java, and utilized Spring framework tools for creating the REST API functionality. When calling a GET request to the end-point, it will return a JSON object with a random first name, last name, email address, age, phone number, street address, city, state, and zip code. The app is hosted with Heroku. Please feel free to use this API to test your applications
+I've created this API for a user to be able to retrieve a person with randomized attributes. I programmed it in Java, and utilized Spring framework tools for creating the REST API functionality. When calling a GET request to the end-point, it will return a JSON object with a random first name, last name, email address, age, phone number, street address, city, state, and zip code. The app is hosted with Heroku. Please feel free to use this API to test your applications!
 
 ### How To Use
 
