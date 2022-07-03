@@ -101,7 +101,7 @@ public class RandomPersonFactory {
     /*
         Written By: Ori Bibas
             Creates a new address. Gets JSON object from addresses repository, creates an array from that object,
-            retrieves the object from a random element in that array, then populats an Address object with that random data.
+            retrieves the object from a random element in that array, then populates an Address object with that random data.
     */
     public Address createRandomAddress() throws IOException, ParseException {
 
