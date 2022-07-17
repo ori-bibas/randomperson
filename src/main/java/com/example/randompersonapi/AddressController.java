@@ -13,18 +13,18 @@ import java.util.ArrayList;
 public class AddressController {
 
     @Autowired
-    private RandomPersonFactory personFactory;
+    private PersonService personService;
 
     @GetMapping("/address")
     public Address address() throws IOException, ParseException {
-        return personFactory.createRandomAddress();
+        return personService.createRandomAddress();
     }
 
     @GetMapping("/address/{count}")
     public ArrayList<Address> addresses(@PathVariable("count") int count) throws IOException, ParseException {
         ArrayList<Address> addresses = new ArrayList<>();
         for(int i = 0; i < count; i++) {
-            addresses.add(personFactory.createRandomAddress());
+            addresses.add(personService.createRandomAddress());
         }
         return addresses;
     }

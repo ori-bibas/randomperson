@@ -2,27 +2,22 @@ package com.example.randompersonapi;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Random;
 
-import static com.example.randompersonapi.PersonJsonService.firstNames;
-import static com.example.randompersonapi.PersonJsonService.lastNames;
+import static com.example.randompersonapi.PersonJsonService.*;
 
 @Service
-public class RandomPersonFactory {
+public class PersonService {
 
     @Autowired
     private PersonJsonService personJsonService;
 
     private static final Random rand = new Random();
-    private static final String emailsURL = "https://raw.githubusercontent.com/EthanRBrown/rrad/master/addresses-us-100.json";
 
     /*
         Written By: Ori Bibas
@@ -103,12 +98,9 @@ public class RandomPersonFactory {
 
         Address address = new Address();
 
-        JSONObject addresses = personJsonService.getJSONObjectFromRemote(emailsURL);
-        JSONArray addressesArray = (JSONArray) addresses.get("addresses");
-
         // Choose a random object from the addresses array
-        int randomIndex = rand.nextInt(addressesArray.size());
-        JSONObject obj = (JSONObject) addressesArray.get(randomIndex);
+        int randomIndex = rand.nextInt(addresses.size());
+        JSONObject obj = (JSONObject) addresses.get(randomIndex);
 
         // Set the properties of that object to the random address, and return.
         address.setStreetAddress((String) obj.get("address1"));

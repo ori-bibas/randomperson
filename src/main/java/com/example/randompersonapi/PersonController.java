@@ -10,17 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 public class PersonController {
 
     @Autowired
-    private RandomPersonFactory personFactory;
+    private PersonService personService;
 
     @GetMapping("/person")
     public ResponseEntity<Person> person () throws IOException, ParseException {
-        Person person = personFactory.createRandomPerson();
+        Person person = personService.createRandomPerson();
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
 
@@ -28,7 +27,7 @@ public class PersonController {
     public ArrayList<Person> getPeople(@PathVariable("count") int count) throws IOException, ParseException {
         ArrayList<Person> people = new ArrayList<>();
         for(int i = 0; i < count; i++) {
-            people.add(personFactory.createRandomPerson());
+            people.add(personService.createRandomPerson());
         }
         return people;
     }

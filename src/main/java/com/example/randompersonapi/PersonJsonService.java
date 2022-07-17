@@ -22,14 +22,18 @@ public class PersonJsonService {
     private static final JSONParser jsonParser = new JSONParser();
     private static final String firstNamesURL = "https://raw.githubusercontent.com/ori-bibas/list-of-names/main/src/first-names.json";
     private static final String lastNamesURL = "https://raw.githubusercontent.com/ori-bibas/list-of-names/main/src/last-names.json";
+    private static final String addressesURL = "https://raw.githubusercontent.com/EthanRBrown/rrad/master/addresses-us-100.json";
     public static JSONArray firstNames = null;
     public static JSONArray lastNames = null;
+    public static JSONArray addresses = null;
 
     public PersonJsonService() throws IOException, ParseException {
         JSONObject firstNamesObj = getJSONObjectFromRemote(firstNamesURL);
         JSONObject lastNamesObj = getJSONObjectFromRemote(lastNamesURL);
+        JSONObject emailsObj = getJSONObjectFromRemote(addressesURL);
         firstNames = (JSONArray) firstNamesObj.get("firstNames");
         lastNames = (JSONArray) lastNamesObj.get("lastNames");
+        addresses = (JSONArray) emailsObj.get("addresses");
     }
 
     public JSONObject getJSONObjectFromRemote(String link) throws IOException, ParseException {
