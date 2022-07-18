@@ -1,6 +1,9 @@
 package com.example.randompersonapi;
 
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,9 +48,17 @@ class PersonServiceTest {
         assertTrue(phoneNumber.charAt(1) != '0');
         assertTrue(phoneNumber.charAt(0) != '1');
         assertTrue(phoneNumber.charAt(1) != '1');
-
     }
 
-    
+    @Test
+    public void createRandomAddressTest() throws IOException, ParseException {
 
+        Address address = personService.createRandomAddress();
+
+        assertNotNull(address);
+        assertFalse(address.streetAddress.isEmpty());
+        assertFalse(address.city.isEmpty());
+        assertFalse(address.state.isEmpty());
+        assertFalse(address.zipCode.isEmpty());
+    }
 }

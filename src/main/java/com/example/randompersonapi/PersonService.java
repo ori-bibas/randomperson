@@ -1,6 +1,5 @@
 package com.example.randompersonapi;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.Random;
-
-import static com.example.randompersonapi.PersonJsonService.*;
 
 @Service
 public class PersonService {
