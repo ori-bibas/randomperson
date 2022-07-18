@@ -28,12 +28,12 @@ public class PersonService {
         Person randomPerson = new Person();
 
         // Get random indexes to pull from.
-        int randomFirstIndex = rand.nextInt(firstNames.size());
-        int randomLastIndex = rand.nextInt(lastNames.size());
+        int randomFirstIndex = rand.nextInt(personJsonService.getFirstNames().size());
+        int randomLastIndex = rand.nextInt(personJsonService.getLastNames().size());
 
         // Set first and last name to be a random element from their respective arrays.
-        String randomFirstName = (String) firstNames.get(randomFirstIndex);
-        String randomLastName = (String) lastNames.get(randomLastIndex);
+        String randomFirstName = (String) personJsonService.getFirstNames().get(randomFirstIndex);
+        String randomLastName = (String) personJsonService.getLastNames().get(randomLastIndex);
 
         // Setting random email, age between 14-90, phone number, and address.
         String randomEmail = createEmail(randomFirstName, randomLastName);
@@ -99,8 +99,8 @@ public class PersonService {
         Address address = new Address();
 
         // Choose a random object from the addresses array
-        int randomIndex = rand.nextInt(addresses.size());
-        JSONObject obj = (JSONObject) addresses.get(randomIndex);
+        int randomIndex = rand.nextInt(personJsonService.getAddresses().size());
+        JSONObject obj = (JSONObject) personJsonService.getAddresses().get(randomIndex);
 
         // Set the properties of that object to the random address, and return.
         address.setStreetAddress((String) obj.get("address1"));
