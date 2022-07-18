@@ -9,7 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PersonServiceTest {
 
+    PersonJsonService personJsonService = new PersonJsonService();
     private PersonService personService = new PersonService();
+
+    PersonServiceTest() throws IOException, ParseException {}
 
     @Test
     public void testCreateEmail() {
@@ -51,7 +54,6 @@ class PersonServiceTest {
     @Test
     public void createRandomAddressTest() throws IOException, ParseException {
 
-        PersonJsonService personJsonService = new PersonJsonService();
         Address address = personService.createRandomAddress();
 
         assertNotNull(address);
@@ -59,5 +61,16 @@ class PersonServiceTest {
         assertFalse(address.city.isEmpty());
         assertFalse(address.state.isEmpty());
         assertFalse(address.zipCode.isEmpty());
+    }
+
+    @Test
+    public void createRandomPersonTest() throws IOException, ParseException {
+
+        Person person = personService.createRandomPerson();
+
+        assertNotNull(person);
+
+        int age = person.getAge();
+        assertTrue(age >= 14 && age <= 90);
     }
 }
