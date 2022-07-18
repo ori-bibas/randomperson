@@ -2,17 +2,11 @@ package com.example.randompersonapi;
 
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(MockitoJUnitRunner.class)
 class PersonServiceTest {
 
     private PersonService personService = new PersonService();
