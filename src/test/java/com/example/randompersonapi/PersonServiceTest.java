@@ -35,4 +35,19 @@ class PersonServiceTest {
         assertTrue(containsChar);
     }
 
+    @Test
+    public void generateRandomPhoneNumberTest() {
+
+        String phoneNumber = personService.generateRandomPhoneNumber();
+
+        assertTrue(phoneNumber.length() == 10);
+        assertTrue(phoneNumber.charAt(0) != '0');
+        assertTrue(phoneNumber.charAt(1) != '0');
+        assertTrue(phoneNumber.charAt(0) != '1');
+        assertTrue(phoneNumber.charAt(1) != '1');
+
+    }
+
+    
+
 }
